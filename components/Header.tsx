@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import './header.css'
 import { faCoffee, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,9 +11,21 @@ import { usePathname } from "next/navigation";
 export default function Header() {
     // const router = useRouter()
     const pathname = usePathname()
+    const [onTop, setOnTop] = useState(false)
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setOnTop(window.scrollY === 0 ? true : false)
+        }
+        window.addEventListener('scroll', handleScroll)
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+    
 
     return (
-        <header className='site-header'>
+        <header className={`site-header ${ !onTop ? 'shadow-sm' : '' }`}>
             <nav className="navbar navbar-expand-lg bg-body-tertiary py-0">
                 <div className="container">
                     <Link className="navbar-brand fw-bold" href="/">Simple Blogger</Link>
