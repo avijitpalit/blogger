@@ -12,6 +12,7 @@ import { useContext, createContext } from 'react'
 import { AuthContext, ThemeContext, ThemeProvider } from '../contexts'
 
 const Span = ({ email }: any) => {
+    // const name = useContext()
     return(
         <span className="text-primary">{ email }</span>
     )
@@ -31,6 +32,9 @@ export default function Header() {
         setEmail('avijitpalit3@gmail.com')
     }
     const {theme, toggleTheme} = useContext(ThemeContext)
+    const NameContext = createContext('Avijit')
+    const [name, setName] = useState('Avijit')
+    const nameContext = useContext(NameContext)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -70,9 +74,10 @@ export default function Header() {
                     </div>
                 </div>
             </nav>
-            <ThemeContext.Provider value={{theme, toggleTheme}}>
-                <button onClick={toggleTheme}>Toggle theme: {theme}</button>
-            </ThemeContext.Provider>
+            
+            <NameContext.Provider value='John'>
+                <Span />
+            </NameContext.Provider>
         </header>
   )
 }
