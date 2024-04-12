@@ -7,11 +7,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 // import { useRouter } from 'next/router'
 import { usePathname } from "next/navigation";
+import { useCookies } from 'react-cookie'
+import { useContext, createContext } from 'react'
+import { AuthContext, ThemeContext, ThemeProvider } from '../contexts'
+
+const Span = ({ email }: any) => {
+    return(
+        <span className="text-primary">{ email }</span>
+    )
+}
 
 export default function Header() {
     // const router = useRouter()
     const pathname = usePathname()
     const [onTop, setOnTop] = useState(false)
+    const [cookies, removeCookie] = useCookies([])
+    const [authBtn, setAuthBtn] = useState({
+        value: 'Sign in / Register',
+        link: '/login'
+    })
+    const [email, setEmail] = useState('')
+    const updateEmail = () => {
+        setEmail('avijitpalit3@gmail.com')
+    }
+    const {theme, toggleTheme} = useContext(ThemeContext)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -23,6 +42,15 @@ export default function Header() {
         }
     }, [])
     
+    useEffect(() => {
+        return cookies.token ? setAuthBtn({
+            value: 'My Account',
+            link: '/my-account'
+        }) : setAuthBtn({
+            value: 'Sign in / Register',
+            link: '/login'
+        })
+    }, [cookies, removeCookie])
 
     return (
         <header className={`site-header ${ !onTop ? 'shadow-sm' : '' }`}>
@@ -38,10 +66,13 @@ export default function Header() {
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                             <button className="btn btn-theme btn-theme-outlined" type="submit">Search</button>
                         </form>
-                        <Link className="auth btn btn-theme ms-2" href="/login"><FontAwesomeIcon className='me-1' icon={ faUser } /> Sign in / Register</Link>
+                        <Link className="auth btn btn-theme ms-2" href={ authBtn.link }><FontAwesomeIcon className='me-1' icon={ faUser } /> { authBtn.value }</Link>
                     </div>
                 </div>
             </nav>
+            <ThemeContext.Provider value={{theme, toggleTheme}}>
+                <button onClick={toggleTheme}>Toggle theme: {theme}</button>
+            </ThemeContext.Provider>
         </header>
   )
 }

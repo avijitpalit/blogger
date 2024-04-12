@@ -16,6 +16,10 @@
     color: var(--color-primary) !important;
 }
 .btn-theme:focus{ box-shadow: 0 0 0 3px #0003; }
+.btn-theme-danger{ background: #CC0033 !important; border-color: #0002 !important; }
+.btn-theme-warning{ background: #F39C12 !important; border-color: #0002 !important; }
+.btn-theme-success{ background: #27AE60 !important; border-color: #0002 !important; }
+.btn-theme-info{ background: #3498DB !important; border-color: #0002 !important; }
 
 .form-control{ border-radius: 3px !important; }
 .form-control:focus{ box-shadow: none !important; border-color: var(--color-primary) !important; }
@@ -24,3 +28,5 @@ a{ color: var(--color-primary) !important; }
 
 .site-header .nav-link.active{ background: var(--color-almond); }
 .site-header{ position: sticky; top: 0; }
+
+.form-row:not(:first-child){ margin-top: 1rem; }
