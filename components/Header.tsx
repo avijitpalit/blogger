@@ -9,14 +9,24 @@ import Link from 'next/link'
 import { usePathname } from "next/navigation";
 import { useCookies } from 'react-cookie'
 import { useContext, createContext } from 'react'
-import { AuthContext, ThemeContext, ThemeProvider } from '../contexts'
+import { AuthContext } from '../contexts'
 
-const Span = ({ email }: any) => {
-    // const name = useContext()
+const Heading = () => {
+    const context = useContext(AuthContext)
+    const [email, setEmail] = useState(context.email)
+    
     return(
-        <span className="text-primary">{ email }</span>
+        <div>
+            <h3 className="text-primary">{ context.email }</h3>
+            <button onClick={() => { context.setEmail('email changed from child component') }}>Child button</button>
+        </div>
     )
 }
+
+const Child = () => {
+    const context = useContext(AuthContext);
+    return <div>{context.email}</div>;
+};
 
 export default function Header() {
     // const router = useRouter()
@@ -27,14 +37,7 @@ export default function Header() {
         value: 'Sign in / Register',
         link: '/login'
     })
-    const [email, setEmail] = useState('')
-    const updateEmail = () => {
-        setEmail('avijitpalit3@gmail.com')
-    }
-    const {theme, toggleTheme} = useContext(ThemeContext)
-    const NameContext = createContext('Avijit')
-    const [name, setName] = useState('Avijit')
-    const nameContext = useContext(NameContext)
+    const email = useContext(AuthContext)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -74,10 +77,9 @@ export default function Header() {
                     </div>
                 </div>
             </nav>
-            
-            <NameContext.Provider value='John'>
-                <Span />
-            </NameContext.Provider>
+            <Child/>
+            <Heading/>
+            <div><button onClick={ () => { email.setEmail('email changed') } }>Click</button></div>
         </header>
   )
 }

@@ -33,8 +33,7 @@ export default function Login() {
     const [registered, setRegistered] = useState(false)
     const router = useRouter()
     const [setCookie] = useCookies(['user-email'])
-    const email = useContext(AuthContext)
-    const [ authEmail, setAuthEmail ] = useState(email)
+    const context = useContext(AuthContext)
 
     useEffect(() => {
         let registered = searchParams.get('registered') === 'true' ? true : false
@@ -58,7 +57,8 @@ export default function Login() {
 
     return (
         <div className="container mt-5">
-            <span>{ authEmail }</span>
+            {/* <span>{ context.data }</span> */}
+
             {
                 registered ? (
                     <h6 className="text-center text-success mb-4">Account created successfully, now login to access dashboard</h6>
