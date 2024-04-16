@@ -25,11 +25,8 @@ export default function Home() {
     { title: 'Blog post 3', excerpt: 'blog 3 excerpt', link: '#' },
   ])
 
-  //const [cookies, removeCookie] = useCookies([])
-
   return (
     <div className="container mt-5">
-        <Header />
         {posts.length ? (
             <div className="d-flex flex-column gap-2">
             {posts.map((post, index) => (

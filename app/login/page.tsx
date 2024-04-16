@@ -33,7 +33,7 @@ export default function Login() {
     const [registered, setRegistered] = useState(false)
     const router = useRouter()
     const [setCookie] = useCookies(['user-email'])
-    const context = useContext(AuthContext)
+    const { setAuthEmail } = useContext(AuthContext)
 
     useEffect(() => {
         let registered = searchParams.get('registered') === 'true' ? true : false
@@ -48,6 +48,7 @@ export default function Login() {
             if(done){
                 // toast.success(msg)
                 // setCookie('user-email', values.email)
+                setAuthEmail(values.email)
                 router.push('/')
             } else toast.error(msg)
         } catch (error) {
@@ -57,8 +58,6 @@ export default function Login() {
 
     return (
         <div className="container mt-5">
-            {/* <span>{ context.data }</span> */}
-
             {
                 registered ? (
                     <h6 className="text-center text-success mb-4">Account created successfully, now login to access dashboard</h6>

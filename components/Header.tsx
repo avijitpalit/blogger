@@ -11,33 +11,16 @@ import { useCookies } from 'react-cookie'
 import { useContext, createContext } from 'react'
 import { AuthContext } from '../contexts'
 
-const Heading = () => {
-    const context = useContext(AuthContext)
-    const [email, setEmail] = useState(context.email)
-    
-    return(
-        <div>
-            <h3 className="text-primary">{ context.email }</h3>
-            <button onClick={() => { context.setEmail('email changed from child component') }}>Child button</button>
-        </div>
-    )
-}
-
-const Child = () => {
-    const context = useContext(AuthContext);
-    return <div>{context.email}</div>;
-};
-
 export default function Header() {
     // const router = useRouter()
     const pathname = usePathname()
     const [onTop, setOnTop] = useState(false)
     const [cookies, removeCookie] = useCookies([])
+    const { authEmail } = useContext(AuthContext)
     const [authBtn, setAuthBtn] = useState({
         value: 'Sign in / Register',
         link: '/login'
     })
-    const email = useContext(AuthContext)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -59,6 +42,16 @@ export default function Header() {
         })
     }, [cookies, removeCookie])
 
+    useEffect(() => {
+        return setAuthBtn(authEmail ? {
+            value: 'My Account',
+            link: '/my-account'
+        } : {
+            value: 'Sign in / Register',
+            link: '/login'
+        })
+    }, [authEmail])
+
     return (
         <header className={`site-header ${ !onTop ? 'shadow-sm' : '' }`}>
             <nav className="navbar navbar-expand-lg bg-body-tertiary py-0">
@@ -77,9 +70,6 @@ export default function Header() {
                     </div>
                 </div>
             </nav>
-            <Child/>
-            <Heading/>
-            <div><button onClick={ () => { email.setEmail('email changed') } }>Click</button></div>
         </header>
   )
 }

@@ -1,19 +1,28 @@
 'use client'
 
-import React from 'react'
+import React, { useContext, useEffect, useLayoutEffect } from 'react'
 import './style.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPowerOff } from '@fortawesome/free-solid-svg-icons'
 import { useCookies, CookiesProvider } from 'react-cookie'
 import { useRouter } from 'next/navigation'
+import { AuthContext } from '@/contexts'
 
 export default function Page() {
     const [cookies, setCookie, removeCookie] = useCookies(['token']);
     const router = useRouter()
+    const { authEmail } = useContext(AuthContext)
+
+    useLayoutEffect(() => {
+        if(!authEmail) return router.push('/login')
+    }, [])
+
     const handleLogout = () => {
         removeCookie('token')
         router.push('/login')
     }
+
+    if(!authEmail) return <></>
 
     return (
         <div className="container my-5">
