@@ -2,11 +2,12 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import styles from "./page.module.css";
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useContext } from "react";
 // import { useCookies } from 'react-cookie'
 import { ToastContainer, toast } from 'react-toastify'
 import axios from 'axios'
 import Header from '@/components/Header';
+import { AuthContext } from '@/contexts'
 
 const Post = (props: any) => {
   return (

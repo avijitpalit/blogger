@@ -12,6 +12,7 @@ import * as Yup from 'yup'
 import { useCookies } from 'react-cookie'
 import { useContext } from 'react'
 import { AuthContext } from '@/contexts'
+import Cookies from 'universal-cookie'
 
 interface FormValues {
     email: String,
@@ -47,7 +48,9 @@ export default function Login() {
             const { done, msg } = data
             if(done){
                 // toast.success(msg)
-                // setCookie('user-email', values.email)
+                const cookies = new Cookies()
+                cookies.set('user-email', values.email, { path: '/' })
+                //setCookie('user-email', values.email)
                 setAuthEmail(values.email)
                 router.push('/')
             } else toast.error(msg)

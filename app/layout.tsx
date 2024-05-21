@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./globals.css";
 import Header from "../components/Header"
 import { AuthProvider } from "@/contexts";
+import Auth from "@/components/Auth";
 
 config.autoAddCss = false;
 
@@ -36,8 +37,10 @@ export default function RootLayout({
         <html lang="en">
             <body className={poppins.className}>
                 <AuthProvider>
-                    <Header />
-                    <main>{children}</main>
+                    <Auth>
+                        <Header />
+                        <main>{children}</main>
+                    </Auth>
                 </AuthProvider>
             </body>
         </html>

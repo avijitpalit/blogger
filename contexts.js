@@ -9,6 +9,7 @@ export const AuthContext = createContext({
 
 export const AuthProvider = ({ children }) => {
     const [authEmail, setAuthEmail] = useState('')
+
     return(
         <AuthContext.Provider value={{ authEmail, setAuthEmail }}>
             { children }
