@@ -36,12 +36,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={poppins.className}>
-                <AuthProvider>
-                    <Auth>
-                        <Header />
-                        <main>{children}</main>
-                    </Auth>
-                </AuthProvider>
+                  <AuthProvider>
+                    <Header />
+                    <main className="container py-5">{children}</main>
+                  </AuthProvider>
             </body>
         </html>
     );

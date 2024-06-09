@@ -5,7 +5,7 @@ import React from 'react'
 import axios from 'axios'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 interface FormValues {
     fname: string,

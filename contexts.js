@@ -3,15 +3,15 @@
 import { createContext, useState } from "react"
 
 export const AuthContext = createContext({
-    authEmail: '',
-    setAuthEmail: (email) => {}
+    authToken: '',
+    setAuthToken: (token) => {}
 })
 
 export const AuthProvider = ({ children }) => {
-    const [authEmail, setAuthEmail] = useState('')
+    const [authToken, setAuthToken] = useState('')
 
     return(
-        <AuthContext.Provider value={{ authEmail, setAuthEmail }}>
+        <AuthContext.Provider value={{ authToken, setAuthToken }}>
             { children }
         </AuthContext.Provider>
     )

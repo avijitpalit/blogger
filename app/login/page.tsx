@@ -14,6 +14,12 @@ import { useContext } from 'react'
 import { AuthContext } from '@/contexts'
 import Cookies from 'universal-cookie'
 
+// const cookies = new Cookies()
+// const token = cookies.get('auth-token')
+
+axios.defaults.baseURL = process.env.SERVER_URL
+// axios.defaults.headers.common['Authorization'] = token;
+
 interface FormValues {
     email: String,
     password: String
@@ -33,8 +39,8 @@ export default function Login() {
     const searchParams = useSearchParams()
     const [registered, setRegistered] = useState(false)
     const router = useRouter()
-    const [setCookie] = useCookies(['user-email'])
-    const { setAuthEmail } = useContext(AuthContext)
+    // const [setCookie] = useCookies(['user-email'])
+    const { setAuthToken } = useContext(AuthContext)
 
     useEffect(() => {
         let registered = searchParams.get('registered') === 'true' ? true : false
@@ -44,14 +50,13 @@ export default function Login() {
     const handleLogin = async (values: FormValues, {setSubmitting}) => {
         setSubmitting(false)
         try {
-            const { data } = await axios.post('http://localhost:3002/signin', values, { withCredentials: true })
-            const { done, msg } = data
+            const { data } = await axios.post('signin', values)
+            console.log(data)
+            const { done, msg, token } = data
             if(done){
-                // toast.success(msg)
                 const cookies = new Cookies()
-                cookies.set('user-email', values.email, { path: '/' })
-                //setCookie('user-email', values.email)
-                setAuthEmail(values.email)
+                cookies.set('auth-token', token, { path: '/' })
+                setAuthToken(token)
                 router.push('/')
             } else toast.error(msg)
         } catch (error) {
@@ -92,7 +97,7 @@ export default function Login() {
                     </Form>
                 )}
             </Formik>
-            <ToastContainer position='bottom-right'/>
+            <ToastContainer/>
         </div>
     )
 }

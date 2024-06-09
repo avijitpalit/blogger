@@ -1,43 +1,36 @@
 'use client'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import styles from "./page.module.css";
 import { FC, useState, useEffect, useContext } from "react";
-// import { useCookies } from 'react-cookie'
-import { ToastContainer, toast } from 'react-toastify'
-import axios from 'axios'
-import Header from '@/components/Header';
-import { AuthContext } from '@/contexts'
-
-const Post = (props: any) => {
-  return (
-    <div className="post p-3 rounded border">
-      <h4><a className="text-decoration-none" href="#">{ props.post.title }</a></h4>
-      <p>{ props.post.excerpt }</p>
-      <div className="mt-3"><a href={ props.post.link } className="btn btn-theme">Read more</a></div>
-    </div>
-  )
-}
+import Image from 'next/image';
+import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link';
+import Post from '@/components/Post';
 
 export default function Home() {
   const [posts, setPosts] = useState([
-    { title: 'Blog post 1', excerpt: 'blog 1 excerpt', link: '#' },
-    { title: 'Blog post 2', excerpt: 'blog 2 excerpt', link: '#' },
-    { title: 'Blog post 3', excerpt: 'blog 3 excerpt', link: '#' },
+    { title: 'Blog post 1', excerpt: 'blog 1 excerpt', thumb: '/temp.webp', id: 1 },
+    { title: 'Blog post 2', excerpt: 'blog 2 excerpt', thumb: '/temp.webp', id: 2 },
+    { title: 'Blog post 3', excerpt: 'blog 3 excerpt', thumb: '/temp.webp', id: 3 },
   ])
 
   return (
-    <div className="container mt-5">
+    <>
+      <h2>Recent posts</h2>
+
+      <div className="mt-3">
         {posts.length ? (
-            <div className="d-flex flex-column gap-2">
-            {posts.map((post, index) => (
-                <Post key={index} post={post} />
+            <div className="row">
+            {posts.map((post) => (
+                <Post key={post.id} post={post} />
             ))}
             </div>
         ) : (
             <h3 className='text-center text-muted'>No posts yet!</h3>
         )}
-    </div>
+      </div>
+    </>
   );
 }
 
