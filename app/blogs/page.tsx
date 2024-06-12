@@ -1,7 +1,8 @@
 'use client'
 
 import Post from '@/components/Post'
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
 const Blogs = () => {
     const [posts, setPosts] = useState([
@@ -10,6 +11,7 @@ const Blogs = () => {
         { title: 'Blog post 3', excerpt: 'blog 3 excerpt', thumb: '/temp.webp', id: 3 },
         { title: 'Blog post 4', excerpt: 'blog 4 excerpt', thumb: '/temp.webp', id: 4 },
     ])
+
     return (
         <>
             {posts.length ? (
